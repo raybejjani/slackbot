@@ -9,9 +9,9 @@ require './heroku'
 # Feel free to change the name of the bot here - this controls what name the bot
 # uses when responding.
 if ARGV.first == 'heroku'
-  bot = HerokuSlackAdapter.new(nick: 'echobot')
+  bot = HerokuSlackAdapter.new(nick: 'flatterybot')
 else
-  bot = ChatAdapter::Shell.new(nick: 'echobot')
+  bot = ChatAdapter::Shell.new(nick: 'flatterybot')
 end
 
 # Feel free to ignore this - makes logging easier
@@ -20,12 +20,12 @@ log = ChatAdapter.log
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
   # ignore all messages not directed to this bot
-  unless message.start_with? 'echobot: '
+  unless message.start_with? 'flatterybot: '
     next # don't process the next lines in this block
   end
 
   # Conditionally send a direct message to the person saying whisper
-  if message == 'echobot: whisper'
+  if message == 'flatterybot: whisper'
     # log some info - useful when something doesn't work as expected
     log.debug("Someone whispered! #{info}")
     # and send the actual message
