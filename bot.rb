@@ -3,7 +3,7 @@ require 'chat-adapter'
 # also use the local HerokuSlackbot class defined in heroku.rb
 require './heroku'
 
-require 'YAML'
+require 'yaml'
 
 # if we're on our local machine, we want to test our bot via shell, but when on
 # heroku, deploy the actual slackbot.
