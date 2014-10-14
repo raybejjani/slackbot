@@ -11,7 +11,7 @@ require 'yaml'
 # Feel free to change the name of the bot here - this controls what name the bot
 # uses when responding.
 if ARGV.first == 'heroku'
-  bot = HerokuSlackAdapter.new(nick: 'flatterybot')
+  bot = HerokuSlackAdapter.new(nick: 'flatterybot', icon_emoji: ':llamablush:')
 else
   bot = ChatAdapter::Shell.new(nick: 'flatterybot')
 end
@@ -26,7 +26,7 @@ bot.on_message do |message, info|
   # ignore all messages not directed to this bot
   if message.start_with?('complimentme') || message.start_with?('compliment me')
     user = info[:user]
-  elsif message.start_with?('compliment')
+  elsif message.start_with?('compliment') && message.length == 2
     user = message.split[1]
   else  
     next # don't process the next lines in this block
