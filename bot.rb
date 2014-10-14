@@ -20,35 +20,47 @@ end
 log = ChatAdapter.log
 
 compliments = YAML.load_file("compliments.yml")
+helpmessage = File.read("help.txt")
+credits = File.read("credits.txt")
 
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
   # ignore all messages not directed to this bot
-  if message.start_with?('complimentme') || message.start_with?('compliment me')
-    user = info[:user]
-  elsif message.start_with?('compliment')
-    user = message.split[1]
-  else  
-    next # don't process the next lines in this block
+  if message.start_with?('compliment')
+    if message.start_with?('complimentme') || message.start_with?('compliment me')
+      user = info[:user]
+    elsif message.start_with?('compliment') && message.split.length == 2
+      user = message.split[1]
+    else  
+      next # don't process the next lines in this block
+    end
+
+    # Conditionally send a direct message to the person saying whisper
+    #if message == 'flatterybot: whisper'
+      # log some info - useful when something doesn't work as expected
+    #  log.debug("Someone whispered! #{info}")
+      # and send the actual message
+    #  bot.direct_message(info[:user], "whisper-whisper")
+    #end
+
+    # split the message in 2 to get what was actually said.
+    # botname, command = message.split(': ', 2)
+
+    randomcompliment = compliments['Compliments'].sample
+
+    # answer the query!
+    # this bot simply echoes the message back
+    "@#{user}: #{randomcompliment}"
+  elsif /flattery?b(ot|utt)\s*h(a|e)lp( me)?/ =~ message
+  # elsif message.start_with?('flatterybot') && message.include?('help')
+    helpmessage
+  elsif message == "flatterybot credits"
+    credits
   end
-
-  # Conditionally send a direct message to the person saying whisper
-  #if message == 'flatterybot: whisper'
-    # log some info - useful when something doesn't work as expected
-  #  log.debug("Someone whispered! #{info}")
-    # and send the actual message
-  #  bot.direct_message(info[:user], "whisper-whisper")
-  #end
-
-  # split the message in 2 to get what was actually said.
-  # botname, command = message.split(': ', 2)
-
-  randomcompliment = compliments['Compliments'].sample
-
-  # answer the query!
-  # this bot simply echoes the message back
-  "@#{user}: #{randomcompliment}"
+  
 end
+
+
 
 # actually start the bot
 bot.start!
