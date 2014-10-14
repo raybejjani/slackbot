@@ -26,7 +26,7 @@ bot.on_message do |message, info|
   # ignore all messages not directed to this bot
   if message.start_with?('complimentme') || message.start_with?('compliment me')
     user = info[:user]
-  elsif message.start_with?('compliment') && message.split.length == 2
+  elsif message.start_with?('compliment')
     user = message.split[1]
   else  
     next # don't process the next lines in this block
