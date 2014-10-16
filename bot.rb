@@ -11,7 +11,7 @@ require 'yaml'
 # Feel free to change the name of the bot here - this controls what name the bot
 # uses when responding.
 if ARGV.first == 'heroku'
-  bot = HerokuSlackAdapter.new(nick: 'flatterybot', channels: ['#animatedgifs', '#bot-testing'], icon_emoji: ':llamablush:')
+  bot = HerokuSlackAdapter.new(nick: 'flatterybot', icon_emoji: ':llamablush:')
 else
   bot = ChatAdapter::Shell.new(nick: 'flatterybot')
 end
@@ -28,7 +28,7 @@ credits = File.read("credits.txt")
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
   channel = info[:channel]
-  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'yakshack'].include?(channel)
+  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'open', 'random', 'yakshack'].include?(channel)
     next
   end  
   # ignore all messages not directed to this bot
