@@ -11,7 +11,7 @@ require 'yaml'
 # Feel free to change the name of the bot here - this controls what name the bot
 # uses when responding.
 if ARGV.first == 'heroku'
-  bot = HerokuSlackAdapter.new(nick: 'flatterybot', channels: ['#yakshack', '#animatedgifs', '#aww', '#bot-testing'], icon_emoji: ':llamablush:')
+  bot = HerokuSlackAdapter.new(nick: 'flatterybot', channels: ['animatedgifs', 'bot-testing'], icon_emoji: ':llamablush:')
 else
   bot = ChatAdapter::Shell.new(nick: 'flatterybot')
 end
