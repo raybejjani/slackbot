@@ -11,7 +11,7 @@ require 'yaml'
 # Feel free to change the name of the bot here - this controls what name the bot
 # uses when responding.
 if ARGV.first == 'heroku'
-  bot = HerokuSlackAdapter.new(nick: 'flatterybot', icon_emoji: ':llamablush:')
+  bot = HerokuSlackAdapter.new(nick: 'flatterybot', channel: 'yakshack', icon_emoji: ':llamablush:')
 else
   bot = ChatAdapter::Shell.new(nick: 'flatterybot')
 end
@@ -28,7 +28,7 @@ credits = File.read("credits.txt")
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
   channel = info[:channel]
-  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'open', 'random', 'support', 'webcomix' 'yakshack'].include?(channel)
+  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'data', 'data-infra', 'open', 'random', 'support', 'webcomix', 'yakshack'].include?(channel)
     next
   end  
   # ignore all messages not directed to this bot
@@ -36,7 +36,10 @@ bot.on_message do |message, info|
     if message.start_with?('complimentme') || message.start_with?('compliment me')
       user = info[:user]
     elsif message.start_with?('compliment') && message.split.length == 2
-      user = message.split[1]
+      user = message.split[1] 
+      if user == 'channel'
+        next "tsk tsk, that's not nice"
+      end
     else  
       next # don't process the next lines in this block
     end
@@ -62,6 +65,8 @@ bot.on_message do |message, info|
     helpmessage
   elsif message == "flatterybot credits"
     credits
+ # elsif message.include?(':disappointedface:')
+ #   "there there"
   end
   
 end
