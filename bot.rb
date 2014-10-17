@@ -23,12 +23,12 @@ compliments = YAML.load_file("compliments.yml")
 helpmessage = File.read("help.txt")
 credits = File.read("credits.txt")
 
-
+hugledger = {}
 
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
   channel = info[:channel]
-  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'data', 'data-infra', 'open', 'random', 'support', 'webcomix', 'yakshack'].include?(channel)
+  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'data', 'data-infra', 'open', 'product', 'random', 'support', 'webcomix', 'yakshack'].include?(channel)
     next
   end  
   # ignore all messages not directed to this bot
@@ -65,8 +65,20 @@ bot.on_message do |message, info|
     helpmessage
   elsif message == "flatterybot credits"
     credits
- # elsif message.include?(':disappointedface:')
- #   "there there"
+  elsif message.include?(':disappointedface::disappointedface:')
+      user = info[:user]
+      if rand < 0.05
+        hugledger[user] = true
+        next "@#{user}: You seem like you're having a bad day. Would you like a hug?"
+      end
+  elsif message == "@flatterybot yes" && hugledger[info[:user]]
+    user = info[:user]
+    hugledger[user] = false
+    next "@#{user} (((hug)))"
+  elsif message == "@flatterybot no" && hugledger[info[:user]]
+    user = info[:user]
+    hugledger[user] = false
+    next "@#{user} That's ok! flatterybot respects your personal space. :heart:"
   end
   
 end
