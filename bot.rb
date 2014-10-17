@@ -28,7 +28,7 @@ credits = File.read("credits.txt")
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
   channel = info[:channel]
-  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'open', 'random', 'yakshack'].include?(channel)
+  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'open', 'random', 'support', 'webcomix' 'yakshack'].include?(channel)
     next
   end  
   # ignore all messages not directed to this bot
