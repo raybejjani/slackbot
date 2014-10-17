@@ -65,9 +65,9 @@ bot.on_message do |message, info|
     helpmessage
   elsif message == "flatterybot credits"
     credits
-  elsif message.include?(':anchor:')
+  elsif message.include?(':disappointed:')
       user = info[:user]
-      if rand < 0.90
+      if rand < 0.05
         hugledger[user] = true
         next "@#{user}: You seem like you're having a bad day. Would you like a hug?"
       end
