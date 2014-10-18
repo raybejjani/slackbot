@@ -5,3 +5,5 @@ You can say
 
 compliment me
 compliment PERSON
+
+If I ask you a question, make sure you @flatterybot when you respond!

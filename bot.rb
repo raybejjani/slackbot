@@ -28,7 +28,7 @@ hugledger = {}
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
   channel = info[:channel]
-  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'data', 'data-infra', 'open', 'product', 'random', 'support', 'webcomix', 'yakshack'].include?(channel)
+  unless ['animatedgifs', 'aww', 'bot-testing', 'coffee', 'data', 'data-infra', 'kids-n-pets', 'open', 'product', 'random', 'support', 'webcomix', 'yakshack'].include?(channel)
     next
   end  
   # ignore all messages not directed to this bot
@@ -65,11 +65,11 @@ bot.on_message do |message, info|
     helpmessage
   elsif message == "flatterybot credits"
     credits
-  elsif message.include?(':disappointed:')
+  elsif message.include?(':disappointed:') || message.include?(':tableflip:')
       user = info[:user]
       if rand < 0.05
         hugledger[user] = true
-        next "@#{user}: You seem like you're having a bad day. Would you like a hug?"
+        next "@#{user}: You seem like you're having a bad day. Would you like a hug? You can say '@flatterybot yes' or '@flatterybot no'"
       end
   elsif message == "@flatterybot yes" && hugledger[info[:user]]
     user = info[:user]
