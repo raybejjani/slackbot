@@ -83,7 +83,5 @@ bot.on_message do |message, info|
   
 end
 
-
-
 # actually start the bot
 bot.start!
