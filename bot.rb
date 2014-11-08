@@ -67,7 +67,7 @@ bot.on_message do |message, info|
     credits
   elsif message.include?(':disappointed:') || message.include?(':tableflip:')
       user = info[:user]
-      if rand < 0.05
+      if rand < 0.10
         hugledger[user] = true
         next "@#{user}: You seem like you're having a bad day. Would you like a hug? You can say '@flatterybot yes' or '@flatterybot no'"
       end
