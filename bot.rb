@@ -65,7 +65,7 @@ bot.on_message do |message, info|
     helpmessage
   elsif message == "flatterybot credits"
     credits
-  elsif message.include?(':disappointed:') || message.include?(':tableflip:')
+  elsif message.include?(':disappointed:') || message.include?(':tableflip:') || message.include?(':(')
       user = info[:user]
       if rand < 0.10
         hugledger[user] = true
