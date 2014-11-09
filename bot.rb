@@ -28,6 +28,7 @@ hugledger = {}
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
   channel = info[:channel]
+  message = message.downcase
   unless ['animatedgifs', 'askanything', 'ath', 'aww', 'bot-testing', 'coffee', 'data', 'data-infra', 'fcrchat', 'gym', 'kids-n-pets', 'open', 'product', 'random', 'recruiting', 'support', 'webcomix', 'yakshack'].include?(channel)
     next
   end  
