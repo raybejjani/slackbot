@@ -24,6 +24,20 @@ helpmessage = File.read("help.txt")
 credits = File.read("credits.txt")
 
 hugledger = {}
+flatteryledger = {}
+
+def recently_complimented?(flatteryledger, user, channel)
+  channel_dictionary = flatteryledger[user]
+  return false if channel_dictionary.nil?
+  compliment_time = channel_dictionary[channel] # the time when we complimented the user
+    return false unless compliment_time
+  # return true unless compliment_time.nil?
+  if compliment_time < (Time.now - 45)
+    return false
+  else
+    return true
+  end
+end
 
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
@@ -34,6 +48,9 @@ bot.on_message do |message, info|
   end  
   # ignore all messages not directed to this bot
   if message.start_with?('compliment')
+    user = info[:user]
+    flatteryledger[user] ||= {}
+    flatteryledger[user][channel] = Time.now
     if message.start_with?('complimentme') || message.start_with?('compliment me')
       user = info[:user]
     elsif message.start_with?('compliment') && message.split.length == 2
@@ -61,6 +78,13 @@ bot.on_message do |message, info|
     # answer the query!
     # this bot simply echoes the message back
     "@#{user}: #{randomcompliment}"
+  elsif message.include?("thank you") || message.include?("thanks")
+    user = info[:user]
+    if recently_complimented?(flatteryledger, user, channel)
+      flatteryledger[user][channel] = false
+      next "@#{user}: You're welcome!"
+      # Send message
+    end
   elsif /flattery?b(ot|utt)\s*h(a|e)lp( me)?/ =~ message
   # elsif message.start_with?('flatterybot') && message.include?('help')
     helpmessage
