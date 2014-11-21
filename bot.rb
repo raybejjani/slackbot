@@ -43,25 +43,25 @@ end
 # Do this thing in this block each time the bot hears a message:
 bot.on_message do |message, info|
   channel = info[:channel]
+  user = info[:user]
   message = message.downcase
   unless channels.include?(channel)
     next
   end  
   # ignore all messages not directed to this bot
   if message.start_with?('compliment')
-    user = info[:user]
-    flatteryledger[user] ||= {}
-    flatteryledger[user][channel] = Time.now
     if message.start_with?('complimentme') || message.start_with?('compliment me')
-      user = info[:user]
+      target = info[:user]
     elsif message.start_with?('compliment') && message.split.length == 2
-      user = message.split[1].downcase
-      if user == 'channel'
+      target = message.split[1].downcase
+      if %w{channel group}.include?(target)
         next "tsk tsk, that's not nice"
       end
     else  
       next # don't process the next lines in this block
     end
+    flatteryledger[target] ||= {}
+    flatteryledger[target][channel] = Time.now
 
     # Conditionally send a direct message to the person saying whisper
     #if message == 'flatterybot: whisper'
@@ -80,29 +80,24 @@ bot.on_message do |message, info|
     # this bot simply echoes the message back
     "@#{user}: #{randomcompliment}"
   elsif message.include?("thank you") || message.include?("thanks")
-    user = info[:user]
     if recently_complimented?(flatteryledger, user, channel)
       flatteryledger[user][channel] = false
       next "@#{user}: You're welcome!"
       # Send message
     end
   elsif /flattery?b(ot|utt)\s*h(a|e)lp( me)?/ =~ message
-  # elsif message.start_with?('flatterybot') && message.include?('help')
     helpmessage
   elsif message == "flatterybot credits"
     credits
   elsif message.include?(':disappointed:') || message.include?(':tableflip:') || message.include?(':(')
-      user = info[:user]
       if rand < 0.10
         hugledger[user] = true
         next "@#{user}: You seem like you're having a bad day. Would you like a hug? You can say '@flatterybot yes' or '@flatterybot no'"
       end
-  elsif message == "@flatterybot yes" && hugledger[info[:user]]
-    user = info[:user]
+  elsif message == "@flatterybot yes" && hugledger[user]
     hugledger[user] = false
     next "@#{user} (((hug)))"
-  elsif message == "@flatterybot no" && hugledger[info[:user]]
-    user = info[:user]
+  elsif message == "@flatterybot no" && hugledger[user]
     hugledger[user] = false
     next "@#{user} That's ok! flatterybot respects your personal space. :heart:"
   end
