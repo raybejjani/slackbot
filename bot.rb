@@ -22,6 +22,8 @@ log = ChatAdapter.log
 compliments = YAML.load_file("compliments.yml")
 helpmessage = File.read("help.txt")
 credits = File.read("credits.txt")
+# channels = ['animatedgifs', 'askanything', 'ath', 'aww', 'bot-testing', 'coffee', 'data', 'data-infra', 'fcrchat', 'flatterybot-testing', 'gym', 'kids-n-pets', 'open', 'product', 'random', 'recruiting', 'support', 'support-spinup', 'webcomix', 'yakshack']
+channels = ENV["SLACK_CHANNELS"].split(", ")
 
 hugledger = {}
 flatteryledger = {}
@@ -43,7 +45,7 @@ end
 bot.on_message do |message, info|
   channel = info[:channel]
   message = message.downcase
-  unless ['animatedgifs', 'askanything', 'ath', 'aww', 'bot-testing', 'coffee', 'data', 'data-infra', 'fcrchat', 'flatterybot-testing', 'gym', 'kids-n-pets', 'open', 'product', 'random', 'recruiting', 'support', 'support-spinup', 'webcomix', 'yakshack'].include?(channel)
+  unless channels.include?(channel)
     next
   end  
   # ignore all messages not directed to this bot
