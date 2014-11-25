@@ -53,8 +53,9 @@ bot.on_message do |message, info|
     if message.start_with?('complimentme') || message.start_with?('compliment me')
       target = info[:user]
     elsif message.start_with?('compliment') && message.split.length == 2
-      target = message.split[1].downcase
-      if %w{channel group}.include?(target)
+      user = message.split[1].downcase
+      target = user
+      if %w{channel group}.include?(user)
         next "tsk tsk, that's not nice"
       end
     else  
